@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package implementarcola;
+package controller;
 
-import datos.Persona;
+import datos.Vehiculo;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -46,16 +46,17 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TextArea areaTA;
     
-    Cola<Persona>colaPersonas;
+    Cola<Vehiculo>colaPersonas;
     
     @FXML
     private void encolarPersonas(ActionEvent event) {
         
-        String nombreP=nombreTXT.getText();
-        String correoP=correoTXT.getText();
-        String numeroP=numeroTXT.getText();
         
-        colaPersonas.encolar(new Persona(nombreP, correoP, numeroP));
+          
+        colaPersonas.encolar(new Vehiculo("nissan", "juan"+1, 1));
+        colaPersonas.encolar(new Vehiculo("mazda", "juan"+2, 5));
+        colaPersonas.encolar(new Vehiculo("chevrolet", "juan"+3, 4));
+        
 
     }
     

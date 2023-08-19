@@ -8,12 +8,13 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="implementarCola.jar" size="3289" download="eager" />
-    <jar href="lib\cola.jar" size="5817" download="eager" />
+    <jar href="implementarCola.jar" size="3311" download="eager" />
+    <jar href="lib\AbsoluteLayout.jar" size="2903" download="eager" />
+    <jar href="lib\cola.jar" size="4932" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="implementarCola" >
     <param name="requiredFXVersion" value="8.0+"/>
   </applet-desc>
-  <jfx:javafx-desc  width="800" height="600" main-class="implementarcola.ImplementarCola"  name="implementarCola" />
+  <jfx:javafx-desc  width="800" height="600" main-class="vista.ImplementarCola"  name="implementarCola" />
   <update check="always"/>
 </jnlp>
