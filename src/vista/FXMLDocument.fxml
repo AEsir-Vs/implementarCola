@@ -7,9 +7,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="445.0" prefWidth="606.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="controller.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="445.0" prefWidth="606.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLDocumentController">
     <children>
-        <Button fx:id="button" layoutX="435.0" layoutY="113.0" onAction="#encolarPersonas" text="Encolar" />
+        <Button fx:id="button" layoutX="435.0" layoutY="113.0" onAction="#encolarPersonas" text="Empezar" />
         <Label fx:id="tituloL" layoutX="108.0" layoutY="35.0" minHeight="16" minWidth="69" prefHeight="78.0" prefWidth="267.0" text="Insertar Personas a la Cola">
          <font>
             <Font size="22.0" />

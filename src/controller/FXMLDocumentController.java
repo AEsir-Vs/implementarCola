@@ -50,113 +50,99 @@ public class FXMLDocumentController implements Initializable {
     
     static Cola<Vehiculo>colaVehiculo;
     
-    static int tiempoEspera= (int)(Math.random()*6+1);
+  
     
-   /* public static class encolar implements ActionListener{ //metodo listener para encolar
-        @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {  
-           
-        }   
-    }*/
-    
-    
-    /*public class mostrar implements ActionListener{ //metodo listener para mostrar el contenido de la cola
-        @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {  
-          areaTA.appendText("El contenido de la cola es "+ colaVehiculo.toString()+"\n");
-        }   
-    }*/
-    
-    public void disponibilidad(){  //metodo no funcional  
+  
+    /*public void disponibilidad(){  //metodo no funcional  
         boolean ocupado=false;
         boolean vacio= colaVehiculo.estaVacia();
         if(!ocupado && vacio){
             ocupado=true;
         }
-        
+   
+       }*/
+    public static int numeroRandom(){
+        int tiempoEspera= (int)(Math.random()*6+1);
+        return tiempoEspera;
+    }
+    public static String nombre(){
+        String nombre= "Juan";
+        int numero= (int)(Math.random()*10+1);
+        nombre+=numero;
+        return nombre;
+    }
+    public static String modelo(){
+        String modelo= "Nissan";
+         int numero= (int)(Math.random()*10+1);
+        modelo+=numero;
+        return modelo;
+    }
+    
+    public static class receptor1 implements ActionListener{ //metodo que instancia el objeto tipo listener del receptor 1
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent e) {  
+               colaVehiculo.receptor1();
+        } 
+       }
+    public static class receptor2 implements ActionListener{ //metodo que instancia el objeto tipo listener del receptor 1
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent e) {  
+               colaVehiculo.receptor2();
+        } 
        }
     
     @FXML
     private void encolarPersonas(ActionEvent event) {
- 
-        
-       /*numeroRandom tiempoEspera= new numeroRandom();
-       Timer segundosEspera= new Timer(1000, tiempoEspera);
-       segundosEspera.start();*/
-       
-       /*nombreRandom nombre= new nombreRandom();
-       Timer miNombre=new Timer(1000, nombre);
-       miNombre.start();*/
-        
-        //colaVehiculo.encolar(new Vehiculo("nissan", "joan",tiempoEspera));
         
         encolar siguiente= new encolar(); //objeto encolar tipo listener
         Timer encolamiento=new Timer(2000,siguiente); //encola cada 5 segundos
         encolamiento.start(); //empieza el temporizador
         
-     
-        /*mostrar Mostrar=new mostrar();//objeto mostrar tipo listener
-        Timer mostrando =new Timer(1000,Mostrar);//muestra cada sg el contenido de la cola 
-        mostrando.start(); //empieza el temporizador*/
+             
         
- //    colaVehiculo.encolar(new Vehiculo("nissan", "joan",tiempoEspera));
-        
-        boolean ocupado=false;
-        boolean vacio= colaVehiculo.estaVacia();
-        if(!ocupado && !vacio){
-            ocupado=true;
+       
+        boolean r1Ocupado=false;
+        boolean vacio= colaVehiculo.estaVacia(); //es verdadero cuando esta vacio
+        if(!r1Ocupado && vacio){
+            r1Ocupado=true;
                       
-            if(ocupado){
+            if(r1Ocupado){
              String mensaje="El receptor 1 esta ocupado";
-             receptor1 nombre= new receptor1();//objeto tipo listener 
-             Timer desencolar= new Timer (tiempoEspera*1000,nombre);//desencola la cantidad de segundos que le indica el tiempo en espera
-             desencolar.start();  //empieza el temporizador
              areaTA.appendText(mensaje);
+             int tiempo = elemento().getTiempoEspera();
+             receptor1 desencolar = new receptor1(); //crea un nuevo receptor1 tipo listener
+             Timer desencolando = new Timer(tiempo*1000,desencolar); //desencuela depentiendo del tiempo de espera
+             desencolando.start();//empieza el temporizador//empieza el temporizador  
             }
-            
-       } /*else {
-           
-            String mensaje="El receptor 2 esta ocupado";
-             receptor2 nombre= new receptor2();
-             Timer desencolar2= new Timer (tiempoEspera*1000,nombre);
-             desencolar2.start();
-             areaTA.appendText(String.valueOf(mensaje));
-            
-        }*/
+    
+        }
     }
+      public static Vehiculo elemento(){ // clase estatica que crea el nuevo elemento tipo vehiculo
+          String nombre = nombre();
+          String modelo= modelo();
+          Vehiculo objV= new Vehiculo(nombre, modelo, numeroRandom());
+          return objV;
+      }
          
        public static class encolar implements ActionListener{ //metodo que instancia el objeto tipo listener del receptor 1
-
+          
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
-            int tiempoEspera= (int)(Math.random()*6+1);
-            colaVehiculo.encolar(new Vehiculo("nissan", "joan",tiempoEspera));
+          Vehiculo objV= elemento();
+          colaVehiculo.encolar(objV); //encuela el objeto tipo vehiculo
+          
+          
         }
+      
        }
-       
-       public static class receptor1 implements ActionListener{ //metodo que instancia el objeto tipo listener del receptor 1
-
-        @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {  
-           Vehiculo receptor = colaVehiculo.receptor1();
-        } 
-       }
-       
-       public static class receptor2 implements ActionListener{ //metodo que instancia el objeto tipo listener del receptor 2
-
-        @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {  
-           Vehiculo receptor = colaVehiculo.receptor2();
-        } 
-       }
-       
-       
+          
         /*colaPersonas.encolar(new Vehiculo("mazda", "juan"+2, 5));
         colaPersonas.encolar(new Vehiculo("chevrolet", "juan"+3, 4));*/       
     
     
     @FXML
     private void mostrarCola(ActionEvent event) {
+        
         areaTA.appendText("El contenido de la cola es "+ colaVehiculo.toString()+"\n");
     }
     
