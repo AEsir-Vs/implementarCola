@@ -8,6 +8,8 @@ package controller;
 import datos.Vehiculo;
 import java.awt.event.ActionListener;
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,27 +26,10 @@ import modelo.Cola;
  */
 public class FXMLDocumentController implements Initializable {
     
-    @FXML
-    private Label nombrePL;
-    
-    @FXML
-    private Label correoPL;
-    
-    @FXML
-    private Label numeroPL;
     
     @FXML
     private Label tituloL;
-    
-    @FXML
-    private TextField nombreTXT;
-    
-    @FXML
-    private TextField correoTXT;
-    
-    @FXML
-    private TextField numeroTXT;
-    
+  
     @FXML
     private TextArea areaTA;
     
@@ -52,30 +37,42 @@ public class FXMLDocumentController implements Initializable {
     
   
     
-  
-    /*public void disponibilidad(){  //metodo no funcional  
-        boolean ocupado=false;
-        boolean vacio= colaVehiculo.estaVacia();
-        if(!ocupado && vacio){
-            ocupado=true;
-        }
-   
-       }*/
     public static int numeroRandom(){
         int tiempoEspera= (int)(Math.random()*6+1);
         return tiempoEspera;
     }
     public static String nombre(){
-        String nombre= "Juan";
-        int numero= (int)(Math.random()*10+1);
-        nombre+=numero;
-        return nombre;
+        LinkedList<String> nombres = new LinkedList<>();
+        nombres.add("Juan");
+        nombres.add("Esteban");
+        nombres.add("Emmanuel");
+        nombres.add("Carlos");
+        nombres.add("Santiago");
+        nombres.add("Luciana");
+        nombres.add("Sofia");
+        nombres.add("Catalina");
+        nombres.add("Marcela");
+        
+         Random random = new Random();
+        int indiceAleatorio = random.nextInt(nombres.size());
+        
+        return nombres.get(indiceAleatorio);
     }
     public static String modelo(){
-        String modelo= "Nissan";
-         int numero= (int)(Math.random()*10+1);
-        modelo+=numero;
-        return modelo;
+        
+        LinkedList<String> modelos= new LinkedList<>();
+        modelos.add("Nissan");
+        modelos.add("Mazda");
+        modelos.add("Chevrolet");
+        modelos.add("Suzuki");
+        modelos.add("Foton");
+        modelos.add("Honda");
+        
+        
+        Random random = new Random();
+        int indiceAleatorio = random.nextInt(modelos.size());
+        
+        return modelos.get(indiceAleatorio);
     }
     
     public static class receptor1 implements ActionListener{ //metodo que instancia el objeto tipo listener del receptor 1
