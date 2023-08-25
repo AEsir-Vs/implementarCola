@@ -17,6 +17,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javax.swing.Timer;
 import modelo.Cola;
 
@@ -32,6 +34,11 @@ public class FXMLDocumentController implements Initializable {
   
     @FXML
     private TextArea areaTA;
+    
+    @FXML
+    private WebView WebView1;
+    
+    WebEngine webEngine;
     
     static Cola<Vehiculo>colaVehiculo;
     
@@ -148,6 +155,7 @@ public class FXMLDocumentController implements Initializable {
         // TODO
         
         colaVehiculo=new Cola<>();
+        webEngine = WebView1.getEngine();
     }    
     
 }
