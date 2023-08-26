@@ -41,8 +41,11 @@ public class FXMLDocumentController implements Initializable {
     WebEngine webEngine;
     
     static Cola<Vehiculo>colaVehiculo;
+    static LinkedList<Vehiculo> recepetor1;
+    static LinkedList<Vehiculo> recepetor2;
+    static LinkedList<Vehiculo> recepetor3;
+    static LinkedList<Vehiculo> recepetor4;
     
-  
     
     public static int numeroRandom(){
         int tiempoEspera= (int)(Math.random()*6+1);
@@ -82,24 +85,28 @@ public class FXMLDocumentController implements Initializable {
         return modelos.get(indiceAleatorio);
     }
     
-    public static class receptor1 implements ActionListener{ //metodo que instancia el objeto tipo listener del receptor 1
+    public static class desencolar implements ActionListener{ //metodo que instancia el objeto tipo listener del receptor 1
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {  
-               colaVehiculo.receptor1();
+           //colaVehiculo.receptor1();
         } 
+        
        }
-    public static class receptor2 implements ActionListener{ //metodo que instancia el objeto tipo listener del receptor 1
-        @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {  
-               colaVehiculo.receptor2();
-        } 
+    public static Vehiculo receptor1(){ //metodo que instancia el objeto tipo listener del receptor 1
+        
+        LinkedList<Vehiculo> recepetor1 = new LinkedList<>();
+                
+                
+        
+        //recepetor1.add(desencolado);
+        return null;
        }
     
     @FXML
     private void encolarPersonas(ActionEvent event) {
         
         encolar siguiente= new encolar(); //objeto encolar tipo listener
-        Timer encolamiento=new Timer(2000,siguiente); //encola cada 5 segundos
+        Timer encolamiento=new Timer(3000,siguiente); //encola cada 5 segundos
         encolamiento.start(); //empieza el temporizador
         
              
@@ -114,7 +121,7 @@ public class FXMLDocumentController implements Initializable {
              String mensaje="El receptor 1 esta ocupado";
              areaTA.appendText(mensaje);
              int tiempo = elemento().getTiempoEspera();
-             receptor1 desencolar = new receptor1(); //crea un nuevo receptor1 tipo listener
+             desencolar desencolar = new desencolar(); //crea un nuevo receptor1 tipo listener
              Timer desencolando = new Timer(tiempo*1000,desencolar); //desencuela depentiendo del tiempo de espera
              desencolando.start();//empieza el temporizador//empieza el temporizador  
             }
@@ -124,7 +131,8 @@ public class FXMLDocumentController implements Initializable {
       public static Vehiculo elemento(){ // clase estatica que crea el nuevo elemento tipo vehiculo
           String nombre = nombre();
           String modelo= modelo();
-          Vehiculo objV= new Vehiculo(nombre, modelo, numeroRandom());
+          int tiempoEspera= numeroRandom();
+          Vehiculo objV= new Vehiculo(nombre, modelo, tiempoEspera);
           return objV;
       }
          
@@ -154,8 +162,10 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         
+        
+       
         colaVehiculo=new Cola<>();
-        webEngine = WebView1.getEngine();
+        //webEngine = WebView1.getEngine();
     }    
     
 }
