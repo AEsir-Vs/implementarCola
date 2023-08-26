@@ -9,18 +9,14 @@
 
 <AnchorPane id="AnchorPane" prefHeight="445.0" prefWidth="606.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLDocumentController">
     <children>
-        <Button fx:id="button" layoutX="435.0" layoutY="113.0" onAction="#encolarPersonas" text="Empezar" />
-        <Label fx:id="tituloL" layoutX="108.0" layoutY="35.0" minHeight="16" minWidth="69" prefHeight="78.0" prefWidth="267.0" text="Insertar Personas a la Cola">
+        <Button fx:id="button" layoutX="23.0" layoutY="101.0" onAction="#encolarPersonas" text="Empezar" />
+        <Label fx:id="tituloL" layoutX="248.0" layoutY="14.0" minHeight="16" minWidth="69" prefHeight="78.0" prefWidth="111.0" text="VEHICULO">
          <font>
             <Font size="22.0" />
          </font></Label>
-      <Label fx:id="nombrePL" layoutX="41.0" layoutY="118.0" text="Nombre Persona" />
-      <TextField fx:id="nombreTXT" layoutX="161.0" layoutY="113.0" />
-      <TextField fx:id="correoTXT" layoutX="161.0" layoutY="162.0" />
-      <Label fx:id="correoPL" layoutX="41.0" layoutY="167.0" text="Correo Persona" />
-      <TextField fx:id="numeroTXT" layoutX="161.0" layoutY="206.0" />
-      <Label fx:id="numeroPL" layoutX="41.0" layoutY="211.0" text="Numero Persona" />
-      <Button fx:id="mostrarBT" layoutX="434.0" layoutY="162.0" mnemonicParsing="false" onAction="#mostrarCola" text="Mostrar" />
-      <TextArea fx:id="areaTA" layoutX="23.0" layoutY="271.0" prefHeight="139.0" prefWidth="560.0" />
+      <Button fx:id="mostrarBT" layoutX="97.0" layoutY="101.0" mnemonicParsing="false" onAction="#mostrarCola" text="Mostrar" />
+      <TextArea fx:id="areaTA" layoutX="23.0" layoutY="147.0" prefHeight="263.0" prefWidth="560.0" />
+      <Button layoutX="169.0" layoutY="101.0" mnemonicParsing="false" text="Detener" />
+      <Button layoutX="248.0" layoutY="101.0" mnemonicParsing="false" text="Mostrar HTML" />
     </children>
 </AnchorPane>
