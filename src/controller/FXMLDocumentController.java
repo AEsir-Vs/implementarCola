@@ -95,8 +95,8 @@ public class FXMLDocumentController implements Initializable {
     public static LinkedList<Vehiculo> receptor1(){ //metodo que instancia el objeto tipo listener del receptor 1
         
        LinkedList<Vehiculo> receptor1 = new LinkedList<>();
-       Cola<Vehiculo> duplicada= modelo.OperacionesCola.duplicarCola(colaVehiculo); 
-       while(!duplicada.estaVacia()){
+        Cola<Vehiculo> duplicada= modelo.OperacionesCola.duplicarCola(colaVehiculo);
+        while(!duplicada.estaVacia()){
         Vehiculo obj= duplicada.desenColar();
         receptor1.add(obj);
        }
@@ -111,18 +111,21 @@ public class FXMLDocumentController implements Initializable {
         encolar siguiente= new encolar(); //objeto encolar tipo listener
         Timer encolamiento=new Timer(3000,siguiente); //encola cada 5 segundos
         encolamiento.start(); //empieza el temporizador
+        //duplica la cola original
         
         int tiempo = elemento().getTiempoEspera();     
         boolean vacio= colaVehiculo.estaVacia(); //es verdadero cuando esta vacio
-        
-        if(vacio){
-        desencolar desencolador = new desencolar(); //crea un nuevo receptor1 tipo listener
-        Timer desencolando = new Timer(tiempo*1000,desencolador); //desencuela depentiendo del tiempo de espera
-        desencolando.start();//empieza el temporizador//empieza el temporizador
-        }
         receptor1();
+       if(vacio){
+            //for(int i=0; i>=0;i++){
+                desencolar desencolador = new desencolar(); //crea un nuevo receptor1 tipo listener
+                Timer desencolando = new Timer(tiempo*1000,desencolador); //desencuela depentiendo del tiempo de espera
+                desencolando.start();//empieza el temporizador//empieza el temporizador
+            //}
+        
+        }
     }
-      public static Vehiculo elemento(){ // clase estatica que crea el nuevo elemento tipo vehiculo
+      public static Vehiculo elemento(){ // clase es tatica que crea el nuevo elemento tipo vehiculo
           String nombre = nombre();
           String modelo= modelo();
           int tiempoEspera= numeroRandom();
@@ -132,7 +135,8 @@ public class FXMLDocumentController implements Initializable {
          
       @FXML
     private void mostrarHTML(ActionEvent event) {
-        areaTAD.setText(receptor1().toString());
+        areaTAD.setText(receptor1().toString()+" "+receptor1().size()+" cliente(s) despachados");
+        
     }
        public static class encolar implements ActionListener{ //metodo que instancia el objeto tipo listener del receptor 1
           
