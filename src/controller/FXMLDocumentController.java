@@ -31,7 +31,8 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private Label tituloL;
-  
+    @FXML
+    private TextArea areaTAD;
     @FXML
     private TextArea areaTA;
     
@@ -41,10 +42,9 @@ public class FXMLDocumentController implements Initializable {
     WebEngine webEngine;
     
     static Cola<Vehiculo>colaVehiculo;
-    static LinkedList<Vehiculo> recepetor1;
-    static LinkedList<Vehiculo> recepetor2;
-    static LinkedList<Vehiculo> recepetor3;
-    static LinkedList<Vehiculo> recepetor4;
+    static LinkedList<Vehiculo> receptor2;
+    static LinkedList<Vehiculo> receptor3;
+    static LinkedList<Vehiculo> receptor4;
     
     
     public static int numeroRandom(){
@@ -84,22 +84,25 @@ public class FXMLDocumentController implements Initializable {
         
         return modelos.get(indiceAleatorio);
     }
-    
+   
     public static class desencolar implements ActionListener{ //metodo que instancia el objeto tipo listener del receptor 1
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {  
-           //colaVehiculo.receptor1();
+           colaVehiculo.desenColar();
         } 
         
        }
-    public static Vehiculo receptor1(){ //metodo que instancia el objeto tipo listener del receptor 1
+    public static LinkedList<Vehiculo> receptor1(){ //metodo que instancia el objeto tipo listener del receptor 1
         
-        LinkedList<Vehiculo> recepetor1 = new LinkedList<>();
-                
-                
+       LinkedList<Vehiculo> receptor1 = new LinkedList<>();
+       Cola<Vehiculo> duplicada= modelo.OperacionesCola.duplicarCola(colaVehiculo); 
+       while(!duplicada.estaVacia()){
+        Vehiculo obj= duplicada.desenColar();
+        receptor1.add(obj);
+       }
+        //receptor1.add(desencolado);
         
-        //recepetor1.add(desencolado);
-        return null;
+        return receptor1;
        }
     
     @FXML
@@ -109,24 +112,15 @@ public class FXMLDocumentController implements Initializable {
         Timer encolamiento=new Timer(3000,siguiente); //encola cada 5 segundos
         encolamiento.start(); //empieza el temporizador
         
-             
-        
-       
-        boolean r1Ocupado=false;
+        int tiempo = elemento().getTiempoEspera();     
         boolean vacio= colaVehiculo.estaVacia(); //es verdadero cuando esta vacio
-        if(!r1Ocupado && vacio){
-            r1Ocupado=true;
-                      
-            if(r1Ocupado){
-             String mensaje="El receptor 1 esta ocupado";
-             areaTA.appendText(mensaje);
-             int tiempo = elemento().getTiempoEspera();
-             desencolar desencolar = new desencolar(); //crea un nuevo receptor1 tipo listener
-             Timer desencolando = new Timer(tiempo*1000,desencolar); //desencuela depentiendo del tiempo de espera
-             desencolando.start();//empieza el temporizador//empieza el temporizador  
-            }
-    
+        
+        if(vacio){
+        desencolar desencolador = new desencolar(); //crea un nuevo receptor1 tipo listener
+        Timer desencolando = new Timer(tiempo*1000,desencolador); //desencuela depentiendo del tiempo de espera
+        desencolando.start();//empieza el temporizador//empieza el temporizador
         }
+        receptor1();
     }
       public static Vehiculo elemento(){ // clase estatica que crea el nuevo elemento tipo vehiculo
           String nombre = nombre();
@@ -136,14 +130,16 @@ public class FXMLDocumentController implements Initializable {
           return objV;
       }
          
+      @FXML
+    private void mostrarHTML(ActionEvent event) {
+        areaTAD.setText(receptor1().toString());
+    }
        public static class encolar implements ActionListener{ //metodo que instancia el objeto tipo listener del receptor 1
           
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
           Vehiculo objV= elemento();
-          colaVehiculo.encolar(objV); //encuela el objeto tipo vehiculo
-          
-          
+          colaVehiculo.encolar(objV); //encuela el objeto tipo vehiculo 
         }
       
        }
@@ -165,6 +161,8 @@ public class FXMLDocumentController implements Initializable {
         
        
         colaVehiculo=new Cola<>();
+        
+        
         //webEngine = WebView1.getEngine();
     }    
     
