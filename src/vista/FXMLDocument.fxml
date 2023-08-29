@@ -16,7 +16,7 @@
          </font></Label>
       <Button fx:id="mostrarBT" layoutX="97.0" layoutY="101.0" mnemonicParsing="false" onAction="#mostrarCola" text="Mostrar" />
       <TextArea fx:id="areaTA" layoutX="23.0" layoutY="147.0" prefHeight="263.0" prefWidth="409.0" />
-      <Button layoutX="169.0" layoutY="101.0" mnemonicParsing="false" text="Detener" />
+      <Button layoutX="169.0" layoutY="101.0" mnemonicParsing="false" onAction="#Detener" text="Detener" />
       <Button layoutX="372.0" layoutY="92.0" mnemonicParsing="false" onAction="#mostrarHTML" text="Mostrar HTML" />
       <TextArea fx:id="areaTAD" layoutX="472.0" layoutY="140.0" prefHeight="263.0" prefWidth="409.0" />
     </children>

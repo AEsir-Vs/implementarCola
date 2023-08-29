@@ -45,6 +45,14 @@ public class FXMLDocumentController implements Initializable {
     static LinkedList<Vehiculo> receptor2;
     static LinkedList<Vehiculo> receptor3;
     static LinkedList<Vehiculo> receptor4;
+    //temporizador para encolar
+    static encolar siguiente= new encolar(); //objeto encolar tipo listener
+    static Timer encolamiento=new Timer(3000,siguiente);
+    
+    //temporizador para desencolar 
+    static desencolar desencolador = new desencolar(); //crea un nuevo receptor1 tipo listener
+    static int tiempo = elemento().getTiempoEspera();  
+    static Timer desencolando = new Timer(tiempo*1000,desencolador);
     
     
     public static int numeroRandom(){
@@ -108,22 +116,15 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void encolarPersonas(ActionEvent event) {
         
-        encolar siguiente= new encolar(); //objeto encolar tipo listener
-        Timer encolamiento=new Timer(3000,siguiente); //encola cada 5 segundos
+         //encola cada 5 segundos
         encolamiento.start(); //empieza el temporizador
         //duplica la cola original
         
-        int tiempo = elemento().getTiempoEspera();     
+          
         boolean vacio= colaVehiculo.estaVacia(); //es verdadero cuando esta vacio
-        receptor1();
-       if(vacio){
-            //for(int i=0; i>=0;i++){
-                desencolar desencolador = new desencolar(); //crea un nuevo receptor1 tipo listener
-                Timer desencolando = new Timer(tiempo*1000,desencolador); //desencuela depentiendo del tiempo de espera
-                desencolando.start();//empieza el temporizador//empieza el temporizador
-            //}
-        
-        }
+        if(vacio){
+                desencolando.start();//empieza el temporizador//empieza el temporizador 
+          }
     }
       public static Vehiculo elemento(){ // clase es tatica que crea el nuevo elemento tipo vehiculo
           String nombre = nombre();
@@ -132,10 +133,16 @@ public class FXMLDocumentController implements Initializable {
           Vehiculo objV= new Vehiculo(nombre, modelo, tiempoEspera);
           return objV;
       }
-         
-      @FXML
+    
+    @FXML
+    private void Detener(ActionEvent event) {
+        encolamiento.stop();
+        desencolando.stop(); 
+    }
+    
+    @FXML
     private void mostrarHTML(ActionEvent event) {
-        areaTAD.setText(receptor1().toString()+" "+receptor1().size()+" cliente(s) despachados");
+        areaTAD.setText(receptor1().toString()+"\n"+receptor1().size()+" cliente(s) despachados");
         
     }
        public static class encolar implements ActionListener{ //metodo que instancia el objeto tipo listener del receptor 1
