@@ -7,7 +7,6 @@ package controller;
 
 import datos.Vehiculo;
 import java.awt.event.ActionListener;
-import java.awt.print.PrinterJob;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.Random;
@@ -143,9 +142,9 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void mostrarHTML(ActionEvent event) {
        
-      //String html = String.valueOf(datos.Tools.convertirColaAHtml(colaVehiculo));
+      String html = String.valueOf(datos.Tools.convertirColaAHtml(colaVehiculo));
       WebEngine web = WebView1.getEngine();
-      web.loadContent(datos.Tools.convertirColaAHtml(colaVehiculo));
+      web.loadContent(html);
      //  areaTAD.setText(receptor1().toString()+"\n"+receptor1().size()+" cliente(s) despachados");
         
     }
@@ -171,7 +170,7 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
         colaVehiculo=new Cola<>();
                 
     }    
