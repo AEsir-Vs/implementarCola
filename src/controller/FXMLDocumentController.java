@@ -7,6 +7,7 @@ package controller;
 
 import datos.Vehiculo;
 import java.awt.event.ActionListener;
+import java.awt.print.PrinterJob;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.Random;
@@ -31,8 +32,7 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private Label tituloL;
-    @FXML
-    private TextArea areaTAD;
+
     @FXML
     private TextArea areaTA;
     
@@ -142,11 +142,15 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void mostrarHTML(ActionEvent event) {
-        areaTAD.setText(receptor1().toString()+"\n"+receptor1().size()+" cliente(s) despachados");
+       
+      //String html = String.valueOf(datos.Tools.convertirColaAHtml(colaVehiculo));
+      WebEngine web = WebView1.getEngine();
+      web.loadContent(datos.Tools.convertirColaAHtml(colaVehiculo));
+     //  areaTAD.setText(receptor1().toString()+"\n"+receptor1().size()+" cliente(s) despachados");
         
     }
        public static class encolar implements ActionListener{ //metodo que instancia el objeto tipo listener del receptor 1
-          
+         
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
           Vehiculo objV= elemento();
@@ -167,14 +171,9 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        
-        
-       
+
         colaVehiculo=new Cola<>();
-        
-        
-        //webEngine = WebView1.getEngine();
+                
     }    
     
 }

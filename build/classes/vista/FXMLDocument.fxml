@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.web.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -7,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="445.0" prefWidth="915.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="445.0" prefWidth="1177.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLDocumentController">
     <children>
         <Button fx:id="button" layoutX="23.0" layoutY="101.0" onAction="#encolarPersonas" text="Empezar" />
         <Label fx:id="tituloL" layoutX="248.0" layoutY="14.0" minHeight="16" minWidth="69" prefHeight="78.0" prefWidth="111.0" text="VEHICULO">
@@ -18,6 +19,6 @@
       <TextArea fx:id="areaTA" layoutX="23.0" layoutY="147.0" prefHeight="263.0" prefWidth="409.0" />
       <Button layoutX="169.0" layoutY="101.0" mnemonicParsing="false" onAction="#Detener" text="Detener" />
       <Button layoutX="372.0" layoutY="92.0" mnemonicParsing="false" onAction="#mostrarHTML" text="Mostrar HTML" />
-      <TextArea fx:id="areaTAD" layoutX="472.0" layoutY="140.0" prefHeight="263.0" prefWidth="409.0" />
+      <WebView fx:id="WebView1" layoutX="573.0" layoutY="154.0" prefHeight="263.0" prefWidth="415.0" />
     </children>
 </AnchorPane>
