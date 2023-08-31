@@ -10,7 +10,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="445.0" prefWidth="1177.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLDocumentController">
     <children>
-        <Button fx:id="button" layoutX="23.0" layoutY="101.0" onAction="#encolarPersonas" text="Empezar" />
+        <Button fx:id="button" layoutX="23.0" layoutY="101.0" onAction="#empezar" text="Empezar" />
         <Label fx:id="tituloL" layoutX="248.0" layoutY="14.0" minHeight="16" minWidth="69" prefHeight="78.0" prefWidth="111.0" text="VEHICULO">
          <font>
             <Font size="22.0" />

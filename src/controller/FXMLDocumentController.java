@@ -28,6 +28,10 @@ import Modelo.Receptor;
  */
 public class FXMLDocumentController implements Initializable {
     
+    static WebEngine web;
+    LinkedList<Receptor> receptores = new LinkedList<>();
+    static Cola<Vehiculo> colaVehiculo;
+    public int tiempoTotal;
     
     @FXML
     private Label tituloL;
@@ -38,10 +42,11 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private WebView WebView1;
     
-    WebEngine webEngine;
-    LinkedList<Receptor> receptores = new LinkedList<>();
-    static Cola<Vehiculo> colaVehiculo;
     
+    //temportizador para mostrar en el text Area
+     mostrar nuevo= new mostrar(); //objeto encolar tipo listener
+     Timer mostrar=new Timer(1000,nuevo);
+     
     //temporizador para encolar
     static encolar siguiente= new encolar(); //objeto encolar tipo listener
     static Timer encolamiento=new Timer(1000,siguiente);
@@ -129,11 +134,12 @@ public class FXMLDocumentController implements Initializable {
     
     
     @FXML
-    private void encolarPersonas(ActionEvent event) {
+    private void empezar(ActionEvent event) {
         
-         //encola cada 5 segundos
-        encolamiento.start(); //empieza el temporizador
-        //duplica la cola original
+       
+        encolamiento.start(); //empieza el temporizador para encolar
+        mostrar.start(); //empieza el temporizador para mostrar
+          
         
           
         boolean vacio= colaVehiculo.estaVacia(); //es verdadero cuando esta vacio
@@ -158,20 +164,24 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void mostrarHTML(ActionEvent event) {
        
-      String html = String.valueOf(datos.Tools.convertirColaAHtml(colaVehiculo));
-      WebEngine web = WebView1.getEngine();
+      String html = datos.Tools.convertirColaAHtml(colaVehiculo);
       web.loadContent(html);
      //  areaTAD.setText(receptor1().toString()+"\n"+receptor1().size()+" cliente(s) despachados");
         
     }
-       public static class encolar implements ActionListener{ //metodo que instancia el objeto tipo listener del receptor 1
-         
+    
+    public class mostrar implements ActionListener{ //metodo que instancia el objeto tipo listener del receptor 1 
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+          revisarReceptoresLibres();
+        }   
+       }
+    public static class encolar implements ActionListener{ //metodo que instancia el objeto tipo listener del receptor 1 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
           Vehiculo objV= elemento();
           colaVehiculo.encolar(objV); //encuela el objeto tipo vehiculo 
-        }
-      
+        }   
        }
           
         /*colaPersonas.encolar(new Vehiculo("mazda", "juan"+2, 5));
@@ -180,15 +190,13 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void mostrarCola(ActionEvent event) {
-        
-        revisarReceptoresLibres();
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         llenarListaReceptores();
         colaVehiculo=new Cola<>();
-                
+        web = WebView1.getEngine();        
     }    
     
 }
