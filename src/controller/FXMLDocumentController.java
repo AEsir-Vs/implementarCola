@@ -21,7 +21,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javax.swing.Timer;
 import modelo.Cola;
-
+import Modelo.Receptor;
 /**
  *
  * @author Esteban V
@@ -39,20 +39,47 @@ public class FXMLDocumentController implements Initializable {
     private WebView WebView1;
     
     WebEngine webEngine;
+    LinkedList<Receptor> receptores = new LinkedList<>();
+    static Cola<Vehiculo> colaVehiculo;
     
-    static Cola<Vehiculo>colaVehiculo;
-    static LinkedList<Vehiculo> receptor2;
-    static LinkedList<Vehiculo> receptor3;
-    static LinkedList<Vehiculo> receptor4;
     //temporizador para encolar
     static encolar siguiente= new encolar(); //objeto encolar tipo listener
-    static Timer encolamiento=new Timer(3000,siguiente);
+    static Timer encolamiento=new Timer(1000,siguiente);
     
     //temporizador para desencolar 
     static desencolar desencolador = new desencolar(); //crea un nuevo receptor1 tipo listener
     static int tiempo = elemento().getTiempoEspera();  
     static Timer desencolando = new Timer(tiempo*1000,desencolador);
     
+    //crea los 4 receptores
+    private void llenarListaReceptores() {
+        for (int i = 0; i < 4; i++) {
+            receptores.add(new Receptor());
+        }
+    }
+    private void revisarReceptoresLibres() {
+        for (Receptor obj : receptores) {
+            if (obj.isLibre() && !colaVehiculo.estaVacia()) {
+                Vehiculo v = colaVehiculo.desenColar();
+                obj.setLibre(false);
+                obj.setTiempoOcupado(v.getTiempoEspera());
+                obj.setContadorVehiculos(obj.getContadorVehiculos() + 1);
+
+                areaTA.appendText("Receptor # : " + obj + "ocupado, " +"durante :"+ obj.getTiempoOcupado()+"\n");
+                obj.setTiempoTotal(v.getTiempoEspera() + obj.getTiempoTotal());
+               
+            } else {
+                if (obj.getTiempoOcupado() > 0) {
+                    obj.setTiempoOcupado(obj.getTiempoOcupado() - 1);
+
+                }
+                if (obj.getTiempoOcupado() == 0) {
+                    obj.setLibre(true);
+                    areaTA.appendText("Receptor #:  " + obj + ". libre"+"\n");
+                }
+            }
+        }
+    }
     
     public static int numeroRandom(){
         int tiempoEspera= (int)(Math.random()*6+1);
@@ -99,18 +126,7 @@ public class FXMLDocumentController implements Initializable {
         } 
         
        }
-    public static LinkedList<Vehiculo> receptor1(){ //metodo que instancia el objeto tipo listener del receptor 1
-        
-       LinkedList<Vehiculo> receptor1 = new LinkedList<>();
-        Cola<Vehiculo> duplicada= modelo.OperacionesCola.duplicarCola(colaVehiculo);
-        while(!duplicada.estaVacia()){
-        Vehiculo obj= duplicada.desenColar();
-        receptor1.add(obj);
-       }
-        //receptor1.add(desencolado);
-        
-        return receptor1;
-       }
+    
     
     @FXML
     private void encolarPersonas(ActionEvent event) {
@@ -121,7 +137,7 @@ public class FXMLDocumentController implements Initializable {
         
           
         boolean vacio= colaVehiculo.estaVacia(); //es verdadero cuando esta vacio
-        if(vacio){
+        if(!vacio){
                 desencolando.start();//empieza el temporizador//empieza el temporizador 
           }
     }
@@ -165,12 +181,12 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void mostrarCola(ActionEvent event) {
         
-        areaTA.appendText("El contenido de la cola es "+ colaVehiculo.toString()+"\n");
+        revisarReceptoresLibres();
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        llenarListaReceptores();
         colaVehiculo=new Cola<>();
                 
     }    
