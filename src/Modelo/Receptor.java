@@ -51,4 +51,5 @@ public class Receptor {
         this.tiempoTotal = tiempoTotal;
     }
     
+    
 }

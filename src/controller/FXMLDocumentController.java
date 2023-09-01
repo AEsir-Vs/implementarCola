@@ -22,6 +22,10 @@ import javafx.scene.web.WebView;
 import javax.swing.Timer;
 import modelo.Cola;
 import Modelo.Receptor;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 /**
  *
  * @author Esteban V
@@ -55,6 +59,9 @@ public class FXMLDocumentController implements Initializable {
     static desencolar desencolador = new desencolar(); //crea un nuevo receptor1 tipo listener
     static int tiempo = elemento().getTiempoEspera();  
     static Timer desencolando = new Timer(tiempo*1000,desencolador);
+    //temporizador para mostrar en el html
+    mostrarHtml tabla= new mostrarHtml();
+    Timer nuevaTabla= new Timer(1000,tabla);
     
     //crea los 4 receptores
     private void llenarListaReceptores() {
@@ -70,7 +77,7 @@ public class FXMLDocumentController implements Initializable {
                 obj.setTiempoOcupado(v.getTiempoEspera());
                 obj.setContadorVehiculos(obj.getContadorVehiculos() + 1);
 
-                areaTA.appendText("Receptor # : " + obj + "ocupado, " +"durante :"+ obj.getTiempoOcupado()+"\n");
+                areaTA.appendText("Receptor" + obj + "ocupado, " +"durante :"+ obj.getTiempoOcupado()+"\n");
                 obj.setTiempoTotal(v.getTiempoEspera() + obj.getTiempoTotal());
                
             } else {
@@ -136,14 +143,12 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void empezar(ActionEvent event) {
         
-       
         encolamiento.start(); //empieza el temporizador para encolar
         mostrar.start(); //empieza el temporizador para mostrar
-          
         
-          
         boolean vacio= colaVehiculo.estaVacia(); //es verdadero cuando esta vacio
         if(!vacio){
+               
                 desencolando.start();//empieza el temporizador//empieza el temporizador 
           }
     }
@@ -159,23 +164,88 @@ public class FXMLDocumentController implements Initializable {
     private void Detener(ActionEvent event) {
         encolamiento.stop();
         desencolando.stop(); 
+        mostrar.stop();
+        nuevaTabla.stop();
+        areaTA.appendText(mostrarInforme());
+        almacenarEnArchivoTexto();
     }
     
     @FXML
     private void mostrarHTML(ActionEvent event) {
-       
-      String html = datos.Tools.convertirColaAHtml(colaVehiculo);
-      web.loadContent(html);
+      /* String html = datos.Tools.convertirColaAHtml(colaVehiculo);
+       web.loadContent(html); */
+       String html = datos.Tools.convertirColaAHtml(colaVehiculo);
+       web.loadContent(html); 
      //  areaTAD.setText(receptor1().toString()+"\n"+receptor1().size()+" cliente(s) despachados");
         
     }
+     public String mostrarInforme() {
+        String informe = "";
+        String inf1 = calcularCantidadVehiculosAtendidosPorCadaReceptor();
+        String inf2 = calcularTiempoCadaReceptor();
+        String inf3 = calcularPromedio();
+        informe = inf1 + inf2 + inf3;
+        return informe;
+    }
+     
+    public String calcularCantidadVehiculosAtendidosPorCadaReceptor() {
+        String reporte = "";
+        int i = 0;
+        for (Receptor elem : receptores) {
+            i++;
+            reporte = reporte + "La Cantidad de carros atendidos por el receptor " + i + " fueron de : " + elem.getContadorVehiculos() + "\n";
+        }
+        return reporte;
+    }
+    public String calcularPromedio() {
+        String reporte = "";
+        int tiempoTotalReceptores = 0;
+        for (Receptor elem : receptores) {
+            tiempoTotalReceptores += elem.getTiempoTotal();
+        }
+        tiempoTotalReceptores = tiempoTotalReceptores / 4;
+        reporte = "El tiempo promedio es de : " + tiempoTotalReceptores + "\n";
+        return reporte;
+    }
+
+    public String calcularTiempoCadaReceptor() {
+        String reporte = "";
+        for (int i = 0; i < receptores.size(); i++) {
+            reporte = reporte + "El receptor #" + i + " atendio un total de: " + receptores.get(i).getTiempoTotal() + "s" + "\n";
+        }
+        return reporte;
+    }
     
+     public void almacenarEnArchivoTexto() {
+        try {
+            String nombreArchivo = "datosReceptores.txt";
+            PrintWriter salida = new PrintWriter(new BufferedWriter(new FileWriter(nombreArchivo)));
+            String linea = mostrarInforme();
+            salida.println(linea);
+            salida.close();
+        } catch (IOException e) {
+            System.out.println("Sucedio un error en almacenarEnArchivoTexto: " + e);
+        }
+    }
+    
+    
+    
+     public class mostrarHtml implements ActionListener{ //metodo que instancia el objeto tipo listener del receptor 1 
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+           String html = datos.Tools.convertirColaAHtml(colaVehiculo);
+           web.loadContent(html); 
+        }   
+       }
     public class mostrar implements ActionListener{ //metodo que instancia el objeto tipo listener del receptor 1 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
           revisarReceptoresLibres();
+          
+          
         }   
        }
+    
     public static class encolar implements ActionListener{ //metodo que instancia el objeto tipo listener del receptor 1 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
